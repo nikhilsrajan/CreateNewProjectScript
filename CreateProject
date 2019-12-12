@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ScriptName=$0
+ScriptName="CreateProject"
 ProjectName=$1
 Usage="Usage: ${ScriptName} ProjectName" 
 
