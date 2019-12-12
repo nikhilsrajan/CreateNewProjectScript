@@ -18,6 +18,7 @@ fi
 
 git clone https://github.com/nikhilsrajan/Sample.git ${ProjectName}
 cd ${ProjectName}
+rm -rf .git
 sed -i -e 's/<Project>/'"${ProjectName}"'/g' CMakeLists.txt
 mkdir build
 cd build
