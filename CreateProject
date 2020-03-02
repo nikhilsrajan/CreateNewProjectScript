@@ -24,7 +24,7 @@ fi
 
 cd ${ProjectName}
 
-printf "cmake_minimum_required(VERSION 3.5)
+printf "cmake_minimum_required(VERSION 3.0)
 project(${ProjectName})
 
 set(SRC_DIR code/src)
