@@ -16,10 +16,72 @@ if [ $# -gt 1 ]; then
     exit 0
 fi
 
-git clone https://github.com/nikhilsrajan/Sample.git ${ProjectName}
+mkdir ${ProjectName}
 cd ${ProjectName}
-rm -rf .git
-sed -i -e 's/<Project>/'"${ProjectName}"'/g' CMakeLists.txt
+
+printf "cmake_minimum_required(VERSION 3.5)
+project(${ProjectName})
+
+set(SRC_DIR code/src)
+set(HDR_DIR code/include)
+
+set(
+    DIRS
+    \${SRC_DIR}
+    \${HDR_DIR}
+)
+
+include_directories(\${DIRS})
+
+set(
+    SRCS
+    \${SRC_DIR}/main.cpp
+)
+
+set(
+    HDRS
+    \${HDR_DIR}/test.hpp
+)
+
+set(
+    SOURCE_LIST
+    \${SRCS}
+    \${HDRS}
+)
+
+add_library(${ProjectName} SHARED \${SOURCE_LIST})
+
+add_executable(${ProjectName}Test \${SRC_DIR}/main.cpp)
+target_link_libraries(
+    ${ProjectName}Test
+    PRIVATE
+    ${ProjectName}
+)" >> CMakeLists.txt
+
+mkdir code
+cd code
+
+mkdir include src
+cd include
+
+printf "#pragma once
+#include <iostream>
+
+void HelloWorld() {
+    std::cout << \"Hello World.\\\n\";
+}" >> test.hpp
+
+cd ../src
+
+printf "#include <test.hpp>
+
+int main() {
+    HelloWorld();
+    return 0;
+}" >> main.cpp
+
+cd ../..
+
 mkdir build
 cd build
 mkdir release debug
