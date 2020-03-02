@@ -7,16 +7,21 @@ Usage="Usage: ${ScriptName} ProjectName"
 if [ $# -eq 0 ]; then
     echo "Project Name not specified."
     echo ${Usage}
-    exit 0
+    exit 1
 fi
 
 if [ $# -gt 1 ]; then
     echo "Too many arguments."
     echo ${Usage}
-    exit 0
+    exit 1
 fi
 
 mkdir ${ProjectName}
+retval=$?
+if [ $retval -eq 1 ]; then
+    exit 1
+fi
+
 cd ${ProjectName}
 
 printf "cmake_minimum_required(VERSION 3.5)
