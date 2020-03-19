@@ -54,13 +54,12 @@ set(
     \${HDRS}
 )
 
-add_library(${ProjectName} SHARED \${SOURCE_LIST})
+add_library(${ProjectName}-static STATIC \${SOURCE_LIST})
 
-add_executable(${ProjectName}Test \${SRC_DIR}/main.cpp)
-target_link_libraries(
-    ${ProjectName}Test
+add_executable(${ProjectName} \${SRC_DIR}/main.cpp)
+target_link_libraries(${ProjectName}
     PRIVATE
-    ${ProjectName}
+    ${ProjectName}-static
 )" >> CMakeLists.txt
 
 mkdir code
@@ -93,4 +92,4 @@ mkdir release debug
 cd release
 cmake ../.. -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 make -j4
-./${ProjectName}Test
+./${ProjectName}
