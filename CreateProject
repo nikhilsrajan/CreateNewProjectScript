@@ -96,7 +96,11 @@ cd ../..
 mkdir build
 cd build
 mkdir release debug
-cd release
+cd debug
+cmake ../.. -DCMAKE_BUILD_TYPE=Debug
+make -j4
+./${ProjectName}
+cd ../release
 cmake ../.. -DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 make -j4
 ./${ProjectName}
