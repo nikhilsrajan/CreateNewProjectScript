@@ -40,7 +40,7 @@ include_directories(\${DIRS})
 
 set(
     SRCS
-    \${SRC_DIR}/main.cpp
+    \${SRC_DIR}/test.cpp
 )
 
 set(
@@ -60,7 +60,8 @@ add_executable(${ProjectName} \${SRC_DIR}/main.cpp)
 target_link_libraries(${ProjectName}
     PRIVATE
     ${ProjectName}-static
-)" >> CMakeLists.txt
+)
+" >> CMakeLists.txt
 
 mkdir code
 cd code
@@ -69,15 +70,21 @@ mkdir include src
 cd include
 
 printf "#pragma once
-#include <iostream>
 
-void HelloWorld() {
-    std::cout << \"Hello World.\\\n\";
-}" >> test.hpp
+void HelloWorld();
+" >> test.hpp
 
 cd ../src
 
-printf "#include <test.hpp>
+printf "#include \"../include/test.hpp\"
+#include <iostream>
+
+void HelloWorld() {
+    std::cout << \"Hello world!\" << std::endl;
+}
+" >> test.cpp
+
+printf "#include \"../include/test.hpp\"
 
 int main() {
     HelloWorld();
